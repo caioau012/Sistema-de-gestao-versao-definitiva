@@ -58,6 +58,10 @@ public class Equipe {
 	public List<Membro> getMembros() {
 		return membros;
 	}
+	
+	public void setMembros(List<Membro> membros) {
+		this.membros = membros;
+	}
 
 	@Override
 	public int hashCode() {

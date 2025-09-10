@@ -64,7 +64,7 @@ public class MembroDao {
 				DB.closeResultSet(rs);
 			}
 			else {
-				throw new DbException ("Erro inesperado! Nenhuma linha afetado!");
+				throw new DbException ("Erro inesperado! Nenhuma linha afetada!");
 			}
 		}
 		catch(SQLException e) {
