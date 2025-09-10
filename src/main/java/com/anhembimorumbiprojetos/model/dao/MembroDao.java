@@ -16,17 +16,42 @@ public class MembroDao {
 	
 	private Connection conn;
 	
+	public MembroDao() {
+	}
+	
 	public MembroDao(Connection conn) {
+		if (conn == null) {
+            throw new IllegalArgumentException("Conexão não pode ser nula");
+        }
 		this.conn = conn;
 	}
 	
+	public void setConnection(Connection conn) {
+        if (conn == null) {
+            throw new IllegalArgumentException("Conexão não pode ser nula");
+        }
+        this.conn = conn;
+    }
+	
+	private void verificarConexao() {
+        if (conn == null) {
+            throw new DbException("Conexão com o banco de dados não estabelecida");
+        }
+    }
+	
 	public void adicionarMembro (Membro membro) {
+		verificarConexao();
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO membro (nome, email, equipeId) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1,  membro.getNome());
 			st.setString(2, membro.getEmail());
-			st.setInt(3,  membro.getEquipeId());
+			if (membro.getEquipeId() > 0) {
+				st.setInt(3,  membro.getEquipeId());
+			}
+			else {
+				st.setNull(3, java.sql.Types.INTEGER);
+			}
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -51,14 +76,18 @@ public class MembroDao {
 	}
 	
 	public void atualizar(Membro membro) {
+		verificarConexao();
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE membro SET id = ?, nome = ?, email = ?, equipeId = ? WHERE id = ?");
-			st.setInt(1,  membro.getId());
-			st.setString(2, membro.getNome());
-			st.setString(3,  membro.getEmail());
-			st.setInt(4,  membro.getEquipeId());
-			st.setInt(5,  membro.getId());
+			st = conn.prepareStatement("UPDATE membro SET nome = ?, email = ?, equipeId = ? WHERE id = ?");
+			st.setString(1, membro.getNome());
+			st.setString(2,  membro.getEmail());
+			if (membro.getEquipeId() > 0) {
+                st.setInt(3, membro.getEquipeId());
+            } else {
+                st.setNull(3, java.sql.Types.INTEGER);
+            }
+			st.setInt(4,  membro.getId());
 			
 			st.executeUpdate();
 		}
@@ -71,6 +100,7 @@ public class MembroDao {
 	}
 	
 	public void excluir(int id) {
+		verificarConexao();
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("DELETE FROM membro WHERE id = ?");
@@ -89,6 +119,7 @@ public class MembroDao {
 	}
 	
 	public Membro buscarPorId(int id) {
+		verificarConexao();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -111,11 +142,12 @@ public class MembroDao {
 	}
 	
 	public List<Membro> listarTodos(){
+		verificarConexao();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		List<Membro> membros = new ArrayList<>();
 		try {
-			st = conn.prepareStatement("SELECT * FROM membro");
+			st = conn.prepareStatement("SELECT * FROM membro ORDER BY nome");
 			rs = st.executeQuery();
 			
 			while (rs.next()) {
@@ -135,11 +167,12 @@ public class MembroDao {
 	}
 	
 	public List<Membro> listarPorEquipe(int equipeId){
+		verificarConexao();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		List<Membro> membros = new ArrayList<>();
 		try {
-			st = conn.prepareStatement("SELECT * FROM membro WHERE equipeId = ?");
+			st = conn.prepareStatement("SELECT * FROM membro WHERE equipeId = ? ORDER BY nome");
 			st.setInt(1, equipeId);
 			rs = st.executeQuery();
 			
@@ -158,12 +191,39 @@ public class MembroDao {
 		}
 	}
 	
+	public List<Membro> listarSemEquipe() {
+        verificarConexao();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Membro> membros = new ArrayList<>();
+        
+        try {
+            st = conn.prepareStatement("SELECT * FROM membro WHERE equipeId IS NULL ORDER BY nome");
+            rs = st.executeQuery();
+            
+            while (rs.next()) {
+                membros.add(instanciarMembro(rs));
+            }
+            return membros;
+        } catch(SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
+    }
+	
 	private Membro instanciarMembro(ResultSet rs) throws SQLException{
 		Membro membro = new Membro();
 		membro.setId(rs.getInt("id"));
 		membro.setNome(rs.getString("nome"));
 		membro.setEmail(rs.getString("email"));
-		membro.setEquipeId(rs.getInt("equipeId"));
+		 int equipeId = rs.getInt("equipeId");
+	        if (!rs.wasNull()) {
+	            membro.setEquipeId(equipeId);
+	        } else {
+	            membro.setEquipeId(0);
+	        }
 		return membro;
 	}
 }
