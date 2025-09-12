@@ -2,6 +2,7 @@ package com.anhembimorumbiprojetos.controller;
 
 import java.util.List;
 
+import com.anhembimorumbiprojetos.db.DB;
 import com.anhembimorumbiprojetos.model.dao.EquipeDao;
 import com.anhembimorumbiprojetos.model.entities.Equipe;
 import com.anhembimorumbiprojetos.model.entities.Membro;
@@ -11,7 +12,7 @@ public class EquipeController {
 	private EquipeDao equipeDao;
 
 	public EquipeController(){
-		this.equipeDao = new EquipeDao();
+		this.equipeDao = new EquipeDao(DB.getConnection());
 	}
 
 	public void adicionarEquipe(Equipe equipe){

@@ -4,14 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.anhembimorumbiprojetos.controller.MembroController">
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.anhembimorumbiprojetos.view.MembroViewController">
+
     <top>
         <HBox spacing="10" style="-fx-padding: 10px;">
             <Button text="Voltar" onAction="#voltar"/>
             <Label text="Gerenciamento de Membros" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
         </HBox>
     </top>
-    
+
     <center>
         <VBox spacing="10" style="-fx-padding: 20px;">
             <HBox spacing="10">
@@ -19,16 +22,16 @@
                 <Button text="Pesquisar" onAction="#pesquisarMembros"/>
                 <Button text="Novo Membro" onAction="#novoMembro"/>
             </HBox>
-            
+
             <TableView fx:id="tabelaMembros" style="-fx-pref-height: 400px;">
                 <columns>
-                    <TableColumn text="ID" fx:id="colunaId" prefWidth="50"/>
-                    <TableColumn text="Nome" fx:id="colunaNome" prefWidth="200"/>
-                    <TableColumn text="Email" fx:id="colunaEmail" prefWidth="200"/>
-                    <TableColumn text="Equipe" fx:id="colunaEquipe" prefWidth="150"/>
+                    <TableColumn fx:id="colunaId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colunaNome" text="Nome" prefWidth="200"/>
+                    <TableColumn fx:id="colunaEmail" text="Email" prefWidth="200"/>
+                    <TableColumn fx:id="colunaEquipe" text="Equipe" prefWidth="150"/>
                 </columns>
             </TableView>
-            
+
             <HBox spacing="10" alignment="CENTER_RIGHT">
                 <Button text="Editar" onAction="#editarMembro"/>
                 <Button text="Excluir" onAction="#excluirMembro" style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
@@ -36,4 +39,8 @@
             </HBox>
         </VBox>
     </center>
+
+    <bottom>
+        <Label text="Sistema de Gerenciamento v1.0" style="-fx-padding: 10px;"/>
+    </bottom>
 </BorderPane>

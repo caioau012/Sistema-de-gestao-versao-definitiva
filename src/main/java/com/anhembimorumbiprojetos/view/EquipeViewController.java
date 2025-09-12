@@ -1,6 +1,7 @@
 package com.anhembimorumbiprojetos.view;
 
 import com.anhembimorumbiprojetos.controller.EquipeController;
+import com.anhembimorumbiprojetos.db.DB;
 import com.anhembimorumbiprojetos.model.entities.Equipe;
 import com.anhembimorumbiprojetos.model.entities.Membro;
 
@@ -56,7 +57,6 @@ public class EquipeViewController {
     }
 
     public void novaEquipe(ActionEvent event) {
-        // Exemplo simples: cria equipe genérica
         Equipe nova = new Equipe();
         nova.setNome("Nova Equipe");
         nova.setDescricao("Descrição padrão");

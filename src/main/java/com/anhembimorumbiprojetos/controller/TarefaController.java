@@ -2,6 +2,7 @@ package com.anhembimorumbiprojetos.controller;
 
 import java.util.List;
 
+import com.anhembimorumbiprojetos.db.DB;
 import com.anhembimorumbiprojetos.model.dao.TarefaDao;
 import com.anhembimorumbiprojetos.model.entities.Tarefa;
 
@@ -10,7 +11,7 @@ public class TarefaController {
 	private TarefaDao tarefaDao;
 	
 	public TarefaController() {
-		this.tarefaDao = new TarefaDao();
+		this.tarefaDao = new TarefaDao(DB.getConnection());
 	}
 	
 	public void adicionarTarefa(Tarefa tarefa) {

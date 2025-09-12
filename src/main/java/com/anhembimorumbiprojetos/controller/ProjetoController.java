@@ -2,6 +2,7 @@ package com.anhembimorumbiprojetos.controller;
 
 import java.util.List;
 
+import com.anhembimorumbiprojetos.db.DB;
 import com.anhembimorumbiprojetos.model.dao.ProjetoDao;
 import com.anhembimorumbiprojetos.model.entities.Projeto;
 
@@ -10,7 +11,7 @@ public class ProjetoController {
 	private ProjetoDao projetoDao;
 	
 	public ProjetoController() {
-		this.projetoDao = new ProjetoDao();
+		this.projetoDao = new ProjetoDao(DB.getConnection());
 	}
 	
 	public void adicionarProjeto(Projeto projeto) {

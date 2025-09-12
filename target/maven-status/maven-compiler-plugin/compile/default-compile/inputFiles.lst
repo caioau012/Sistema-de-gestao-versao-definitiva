@@ -1,6 +1,8 @@
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\dao\ProjetoDao.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\entities\Membro.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\entities\Projeto.java
+C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\view\MembroViewController.java
+C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\view\TarefaViewController.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\dao\TarefaDao.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\MainApp.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\db\DB.java
@@ -11,6 +13,7 @@ C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbipr
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\dao\EquipeDao.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\entities\Equipe.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\controller\MainController.java
+C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\view\ProjetoViewController.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\controller\EquipeController.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\controller\TarefaController.java
 C:\temp\ws-eclipse\com.anhembimorumbiprojetos\src\main\java\com\anhembimorumbiprojetos\model\entities\Tarefa.java
