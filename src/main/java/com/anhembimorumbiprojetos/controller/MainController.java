@@ -1,6 +1,6 @@
 package com.anhembimorumbiprojetos.controller;
 
-import com.anhembimorumbiprojetos.application.MainApp;
+import com.anhembimorumbiprojetos.MainApp;
 
 import javafx.fxml.FXML;
 

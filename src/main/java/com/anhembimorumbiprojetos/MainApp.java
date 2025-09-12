@@ -1,4 +1,4 @@
-package com.anhembimorumbiprojetos.application;
+package com.anhembimorumbiprojetos;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class MainApp extends Application {
     public void start(Stage stage) {
         primaryStage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/sistema/view/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
             Parent root = loader.load();
             
             Scene scene = new Scene(root, 800, 600);
@@ -39,7 +39,7 @@ public class MainApp extends Application {
 
     public static void changeScene(String fxmlFile, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/com/sistema/view/" + fxmlFile));
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/view/" + fxmlFile));
             Parent root = loader.load();
             
             Scene scene = new Scene(root, 800, 600);
@@ -54,7 +54,7 @@ public class MainApp extends Application {
 
     public static void openNewWindow(String fxmlFile, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/com/sistema/view/" + fxmlFile));
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/view/" + fxmlFile));
             Parent root = loader.load();
             
             Stage stage = new Stage();
