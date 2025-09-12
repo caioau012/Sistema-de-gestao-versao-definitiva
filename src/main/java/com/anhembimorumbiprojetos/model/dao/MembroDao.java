@@ -213,17 +213,17 @@ public class MembroDao {
         }
     }
 	
-	private Membro instanciarMembro(ResultSet rs) throws SQLException{
+	private Membro instanciarMembro(ResultSet rs) throws SQLException {
 		Membro membro = new Membro();
 		membro.setId(rs.getInt("id"));
 		membro.setNome(rs.getString("nome"));
 		membro.setEmail(rs.getString("email"));
-		 int equipeId = rs.getInt("equipeId");
-	        if (!rs.wasNull()) {
-	            membro.setEquipeId(equipeId);
-	        } else {
-	            membro.setEquipeId(0);
-	        }
+		int equipeId = rs.getInt("equipeId");
+		if (rs.wasNull()) {
+			membro.setEquipeId(0);
+		} else {
+			membro.setEquipeId(equipeId);
+		}
 		return membro;
 	}
 }

@@ -100,7 +100,7 @@ public class EquipeDao {
 			st.setInt(1, id);
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected == 0) {
-				throw new DbException("Membro não encontrado");
+				throw new DbException("Equipe não encontrada");
 			}
 		}
 		catch (SQLException e) {
@@ -241,17 +241,17 @@ public class EquipeDao {
 		}
 	}
 	
-	private Membro instanciarMembro(ResultSet rs) throws SQLException{
+	private Membro instanciarMembro(ResultSet rs) throws SQLException {
 		Membro membro = new Membro();
 		membro.setId(rs.getInt("id"));
 		membro.setNome(rs.getString("nome"));
 		membro.setEmail(rs.getString("email"));
-		 int equipeId = rs.getInt("equipeId");
-	        if (!rs.wasNull()) {
-	            membro.setEquipeId(equipeId);
-	        } else {
-	            membro.setEquipeId(0);
-	        }
+		int equipeId = rs.getInt("equipeId");
+		if (rs.wasNull()) {
+			membro.setEquipeId(0);
+		} else {
+			membro.setEquipeId(equipeId);
+		}
 		return membro;
 	}
 	
@@ -266,11 +266,7 @@ public class EquipeDao {
 		}
 		else {
 			equipe.setDataCriacao(null);
-		}
-		int equipeId = equipe.getId();
-		List<Membro> membros = listarMembrosPorEquipe(equipeId);
-		equipe.setMembros(membros);
-		
+		}	
 		return equipe;
 	}
 }

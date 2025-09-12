@@ -91,7 +91,7 @@ public class EquipeController {
 		}
 		catch(Exception e) {
 			System.err.println("Erro ao remover membro: " + e.getMessage());
-			throw new RuntimeException("Falha ao remover memebro", e);
+			throw new RuntimeException("Falha ao remover membro", e);
 		}
 	}
 	

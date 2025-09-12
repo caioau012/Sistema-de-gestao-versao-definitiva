@@ -77,7 +77,7 @@ public class ProjetoDao {
 		verificarConexao();
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE projeto SET nome = ?, descricao = ?, dataInicio = ?, dataTermino = ?, status = ? equipeId = ? WHERE id = ?");
+			st = conn.prepareStatement("UPDATE projeto SET nome = ?, descricao = ?, dataInicio = ?, dataTermino = ?, status = ?, equipeId = ? WHERE id = ?");
 			st.setString(1,  projeto.getNome());
 			st.setString(2,  projeto.getDescricao());
 			st.setDate(3, Date.valueOf(projeto.getDataInicio()));
