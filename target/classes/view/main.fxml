@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.controller.MainController">
+    <top>
+        <MenuBar>
+            <Menu text="Arquivo">
+                <MenuItem text="Sair" onAction="#sair"/>
+            </Menu>
+            <Menu text="Cadastros">
+                <MenuItem text="Tarefas" onAction="#abrirTarefas"/>
+                <MenuItem text="Projetos" onAction="#abrirProjetos"/>
+                <MenuItem text="Membros" onAction="#abrirMembros"/>
+                <MenuItem text="Equipes" onAction="#abrirEquipes"/>
+            </Menu>
+            <Menu text="Relatórios">
+                <MenuItem text="Dashboard"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="Sistema de Gerenciamento" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Label text="Bem-vindo ao sistema de gerenciamento de projetos, tarefas e equipes"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Gerenciar Tarefas" onAction="#abrirTarefas" style="-fx-font-size: 14px;"/>
+                <Button text="Gerenciar Projetos" onAction="#abrirProjetos" style="-fx-font-size: 14px;"/>
+                <Button text="Gerenciar Membros" onAction="#abrirMembros" style="-fx-font-size: 14px;"/>
+                <Button text="Gerenciar Equipes" onAction="#abrirEquipes" style="-fx-font-size: 14px;"/>
+            </HBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <Label text="Sistema de Gerenciamento v1.0" style="-fx-padding: 10px;"/>
+    </bottom>
+</BorderPane>

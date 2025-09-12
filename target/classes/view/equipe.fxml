@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sistema.controller.EquipeController">
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10px;">
+            <Button text="Voltar" onAction="#voltar"/>
+            <Label text="Gerenciamento de Equipes" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+    
+    <center>
+        <VBox spacing="10" style="-fx-padding: 20px;">
+            <HBox spacing="10">
+                <TextField fx:id="campoPesquisa" promptText="Pesquisar equipes..." style="-fx-pref-width: 300px;"/>
+                <Button text="Pesquisar" onAction="#pesquisarEquipes"/>
+                <Button text="Nova Equipe" onAction="#novaEquipe"/>
+            </HBox>
+            
+            <TableView fx:id="tabelaEquipes" style="-fx-pref-height: 400px;">
+                <columns>
+                    <TableColumn text="ID" fx:id="colunaId" prefWidth="50"/>
+                    <TableColumn text="Nome" fx:id="colunaNome" prefWidth="200"/>
+                    <TableColumn text="Descrição" fx:id="colunaDescricao" prefWidth="250"/>
+                    <TableColumn text="Data Criação" fx:id="colunaDataCriacao" prefWidth="100"/>
+                    <TableColumn text="Membros" fx:id="colunaMembros" prefWidth="80"/>
+                </columns>
+            </TableView>
+            
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Editar" onAction="#editarEquipe"/>
+                <Button text="Excluir" onAction="#excluirEquipe" style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
+                <Button text="Ver Membros" onAction="#verMembrosEquipe"/>
+                <Button text="Gerenciar Membros" onAction="#gerenciarMembrosEquipe"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
