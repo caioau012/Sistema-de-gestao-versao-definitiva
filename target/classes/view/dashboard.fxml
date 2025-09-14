@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.anhembimorumbiprojetos.controller.DashboardController">
+
+    <!-- ===== MENU LATERAL ===== -->
+    <left>
+        <VBox prefWidth="200" style="-fx-background-color:#1e5eff;">
+            <Label text="ProjectHub" style="-fx-text-fill:white; -fx-font-size:18; -fx-font-weight:bold; -fx-padding:10;"/>
+            <Label text="Gestão de Projetos" style="-fx-text-fill:white; -fx-padding:10;"/>
+
+            <Button text="Dashboard" onAction="#onDashboard"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Projetos" onAction="#onProjetos"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Tarefas" onAction="#onTarefas"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Equipes" onAction="#onEquipes"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Controle de Ponto" onAction="#onControlePonto"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Agenda" onAction="#onAgenda"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Relatórios" onAction="#onRelatorios"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+
+<Button text="Configurações" onAction="#onConfiguracoes"
+        style="-fx-background-color:transparent;-fx-text-fill:white;-fx-alignment:CENTER_LEFT;" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <center>
+        <VBox spacing="20" style="-fx-background-color:#f9f9f9; -fx-padding:20;">
+            
+            <!-- CARDS NO TOPO -->
+            <HBox spacing="20">
+                <VBox style="-fx-background-color:white;-fx-padding:15;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.1),5,0,0,2);" alignment="CENTER">
+                    <Label text="Projetos Ativos" style="-fx-font-weight:bold;"/>
+                    <Label text="8" style="-fx-font-size:20;-fx-font-weight:bold;"/>
+                    <Label text="+12% este mês" style="-fx-text-fill:green;"/>
+                </VBox>
+                <VBox style="-fx-background-color:white;-fx-padding:15;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.1),5,0,0,2);" alignment="CENTER">
+                    <Label text="Tarefas Concluídas" style="-fx-font-weight:bold;"/>
+                    <Label text="142" style="-fx-font-size:20;-fx-font-weight:bold;"/>
+                    <Label text="+8% esta semana" style="-fx-text-fill:green;"/>
+                </VBox>
+                <VBox style="-fx-background-color:white;-fx-padding:15;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.1),5,0,0,2);" alignment="CENTER">
+                    <Label text="Membros da Equipe" style="-fx-font-weight:bold;"/>
+                    <Label text="24" style="-fx-font-size:20;-fx-font-weight:bold;"/>
+                    <Label text="+2 novos membros" style="-fx-text-fill:green;"/>
+                </VBox>
+                <VBox style="-fx-background-color:white;-fx-padding:15;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.1),5,0,0,2);" alignment="CENTER">
+                    <Label text="Horas Trabalhadas" style="-fx-font-weight:bold;"/>
+                    <Label text="186h" style="-fx-font-size:20;-fx-font-weight:bold;"/>
+                    <Label text="Esta semana" style="-fx-text-fill:gray;"/>
+                </VBox>
+            </HBox>
+
+            <!-- SEÇÃO INFERIOR COM PROJETOS + TAREFAS -->
+            <HBox spacing="20">
+                <!-- PROJETOS RECENTES -->
+                <VBox style="-fx-background-color:white;-fx-padding:15;-fx-pref-width:500;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.1),5,0,0,2);">
+                    <Label text="Projetos Recentes" style="-fx-font-weight:bold;-fx-font-size:16;"/>
+                    
+                    <VBox spacing="10" style="-fx-padding:10;">
+                        <Label text="Sistema de Vendas (Em andamento)"/>
+                        <ProgressBar progress="0.85" prefWidth="400"/>
+
+                        <Label text="App Mobile (Em desenvolvimento)"/>
+                        <ProgressBar progress="0.60" prefWidth="400"/>
+
+                        <Label text="Website Institucional (Revisão)"/>
+                        <ProgressBar progress="0.95" prefWidth="400"/>
+
+                        <Label text="Dashboard Analytics (Iniciado)"/>
+                        <ProgressBar progress="0.40" prefWidth="400"/>
+                    </VBox>
+                </VBox>
+
+                <!-- PRÓXIMAS TAREFAS -->
+                <VBox style="-fx-background-color:white;-fx-padding:15;-fx-pref-width:300;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.1),5,0,0,2);">
+                    <Label text="Próximas Tarefas" style="-fx-font-weight:bold;-fx-font-size:16;"/>
+                    <ListView fx:id="tarefasListView" prefHeight="300"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

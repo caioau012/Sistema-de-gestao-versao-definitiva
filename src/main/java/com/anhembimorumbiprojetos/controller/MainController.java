@@ -2,34 +2,40 @@ package com.anhembimorumbiprojetos.controller;
 
 import com.anhembimorumbiprojetos.MainApp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class MainController {
 
     @FXML
-    private void abrirTarefas() {
-        MainApp.changeScene("tarefa.fxml", "Gerenciamento de Tarefas");
+    public void sair(ActionEvent event) {
+        System.out.println("Encerrando aplicação...");
+        System.exit(0);
     }
 
     @FXML
-    private void abrirProjetos() {
-        MainApp.changeScene("projeto.fxml", "Gerenciamento de Projetos");
+    public void abrirTarefas(ActionEvent event) {
+        MainApp.changeScene("/view/tarefa.fxml", "Tarefas");
     }
 
     @FXML
-    private void abrirMembros() {
-        MainApp.changeScene("membro.fxml", "Gerenciamento de Membros");
+    public void abrirProjetos(ActionEvent event) {
+        MainApp.changeScene("/view/projeto.fxml", "Projetos");
     }
 
     @FXML
-    private void abrirEquipes() {
-        MainApp.changeScene("equipe.fxml", "Gerenciamento de Equipes");
+    public void abrirMembros(ActionEvent event) {
+        MainApp.changeScene("/view/membro.fxml", "Membros");
     }
 
     @FXML
-    private void sair() {
-        if (MainApp.showConfirmation("Sair", "Deseja realmente sair do sistema?")) {
-            MainApp.exit();
-        }
+    public void abrirEquipes(ActionEvent event) {
+        MainApp.changeScene("/view/equipe.fxml", "Equipes");
+    }
+
+    @FXML
+    public void abrirDashboard(ActionEvent event) {
+        MainApp.changeScene("/view/dashboard.fxml", "Dashboard");
     }
 }
+

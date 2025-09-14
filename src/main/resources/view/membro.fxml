@@ -1,46 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.anhembimorumbiprojetos.view.MembroViewController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.anhembimorumbiprojetos.controller.MembroControllerView"
+            prefWidth="600" prefHeight="400">
 
-    <top>
-        <HBox spacing="10" style="-fx-padding: 10px;">
-            <Button text="Voltar" onAction="#voltar"/>
-            <Label text="Gerenciamento de Membros" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-        </HBox>
-    </top>
+    <children>
+        <Label layoutX="20" layoutY="20" text="Tela de Membros (em construção)" fx:id="labelStatus"/>
 
-    <center>
-        <VBox spacing="10" style="-fx-padding: 20px;">
-            <HBox spacing="10">
-                <TextField fx:id="campoPesquisa" promptText="Pesquisar membros..." style="-fx-pref-width: 300px;"/>
-                <Button text="Pesquisar" onAction="#pesquisarMembros"/>
-                <Button text="Novo Membro" onAction="#novoMembro"/>
-            </HBox>
+        <Button layoutX="20" layoutY="60" text="Voltar ao Dashboard"
+                onAction="#onVoltarDashboard"/>
+    </children>
+</AnchorPane>
 
-            <TableView fx:id="tabelaMembros" style="-fx-pref-height: 400px;">
-                <columns>
-                    <TableColumn fx:id="colunaId" text="ID" prefWidth="50"/>
-                    <TableColumn fx:id="colunaNome" text="Nome" prefWidth="200"/>
-                    <TableColumn fx:id="colunaEmail" text="Email" prefWidth="200"/>
-                    <TableColumn fx:id="colunaEquipe" text="Equipe" prefWidth="150"/>
-                </columns>
-            </TableView>
-
-            <HBox spacing="10" alignment="CENTER_RIGHT">
-                <Button text="Editar" onAction="#editarMembro"/>
-                <Button text="Excluir" onAction="#excluirMembro" style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
-                <Button text="Sem Equipe" onAction="#listarMembrosSemEquipe"/>
-            </HBox>
-        </VBox>
-    </center>
-
-    <bottom>
-        <Label text="Sistema de Gerenciamento v1.0" style="-fx-padding: 10px;"/>
-    </bottom>
-</BorderPane>
