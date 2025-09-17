@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +48,12 @@ public class ProjetoDao {
 			st = conn.prepareStatement("INSERT INTO projeto (nome, descricao, dataInicio, dataTermino, status, equipeId) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1,  projeto.getNome());
 			st.setString(2,  projeto.getDescricao());
-			st.setDate(3, Date.valueOf(projeto.getDataInicio()));
-			st.setDate(4,  Date.valueOf(projeto.getDataTermino()));
+			LocalDate inicio = projeto.getDataInicio();
+			LocalDate termino = projeto.getDataTermino();
+
+			st.setDate(3, inicio != null ? Date.valueOf(inicio) : null);
+			st.setDate(4, termino != null ? Date.valueOf(termino) : null);
+
 			st.setString(5,  projeto.getStatus());
 			st.setInt(6,  projeto.getEquipeId());
 			
@@ -80,8 +85,12 @@ public class ProjetoDao {
 			st = conn.prepareStatement("UPDATE projeto SET nome = ?, descricao = ?, dataInicio = ?, dataTermino = ?, status = ?, equipeId = ? WHERE id = ?");
 			st.setString(1,  projeto.getNome());
 			st.setString(2,  projeto.getDescricao());
-			st.setDate(3, Date.valueOf(projeto.getDataInicio()));
-			st.setDate(4,  Date.valueOf(projeto.getDataTermino()));
+			LocalDate inicio = projeto.getDataInicio();
+			LocalDate termino = projeto.getDataTermino();
+
+			st.setDate(3, inicio != null ? Date.valueOf(inicio) : null);
+			st.setDate(4, termino != null ? Date.valueOf(termino) : null);
+
 			st.setString(5,  projeto.getStatus());
 			st.setInt(6,  projeto.getEquipeId());
 			st.setInt(7, projeto.getId());

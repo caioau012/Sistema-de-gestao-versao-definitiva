@@ -1,18 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.anhembimorumbiprojetos.controller.ProjetoControllerView"
-            prefWidth="600" prefHeight="400">
+            prefWidth="800" prefHeight="600">
 
-    <children>
-        <Label layoutX="20" layoutY="20" text="Tela de Projetos (em construção)" fx:id="labelStatus"/>
+    <top>
+        <Label text="Cadastro de Projetos"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10px;"/>
+    </top>
 
-        <Button layoutX="20" layoutY="60" text="Voltar ao Dashboard"
-                onAction="#onVoltarDashboard"/>
-    </children>
-</AnchorPane>
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20px;">
+            <!-- Formulário de entrada -->
+            <GridPane hgap="10" vgap="10">
+                <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nomeField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Descrição:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="descricaoField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Data Início:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dataInicioField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Data Término:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dataTerminoField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="statusField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Equipe:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="equipeComboBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <Button text="Adicionar Projeto" onAction="#onAdicionarProjeto" style="-fx-padding: 10px;"/>
+
+            <!-- Tabela de projetos -->
+            <TableView fx:id="tabelaProjetos" prefHeight="300">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colNome" text="Nome" prefWidth="150"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+                    <TableColumn fx:id="colEquipe" text="Equipe" prefWidth="150"/>
+                </columns>
+            </TableView>
+            <Button text="Voltar ao Dashboard" onAction="#onVoltarDashboard" style="-fx-padding: 10px;"/>
+            
+        </VBox>
+    </center>
+</BorderPane>
+
 
