@@ -1,7 +1,6 @@
 package com.anhembimorumbiprojetos.view;
 
 import com.anhembimorumbiprojetos.controller.EquipeController;
-import com.anhembimorumbiprojetos.db.DB;
 import com.anhembimorumbiprojetos.model.entities.Equipe;
 import com.anhembimorumbiprojetos.model.entities.Membro;
 

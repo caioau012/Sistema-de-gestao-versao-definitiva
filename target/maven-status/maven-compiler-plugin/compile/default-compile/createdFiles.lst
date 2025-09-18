@@ -3,6 +3,7 @@ com\anhembimorumbiprojetos\view\TarefaViewController.class
 com\anhembimorumbiprojetos\view\MembroViewController.class
 com\anhembimorumbiprojetos\controller\MembroControllerView$1.class
 com\anhembimorumbiprojetos\controller\TarefaControllerView$4.class
+com\anhembimorumbiprojetos\controller\TarefaControllerView$8.class
 com\anhembimorumbiprojetos\controller\ProjetoController.class
 com\anhembimorumbiprojetos\model\dao\EquipeDao.class
 com\anhembimorumbiprojetos\controller\TarefaControllerView$1.class
@@ -11,12 +12,14 @@ com\anhembimorumbiprojetos\controller\MembroControllerView$2.class
 com\anhembimorumbiprojetos\controller\ProjetoControllerView$1.class
 com\anhembimorumbiprojetos\MainApp.class
 com\anhembimorumbiprojetos\controller\DashboardController.class
+com\anhembimorumbiprojetos\controller\TarefaControllerView$6.class
 com\anhembimorumbiprojetos\db\DB.class
 com\anhembimorumbiprojetos\model\dao\TarefaDao.class
 com\anhembimorumbiprojetos\model\dao\ProjetoDao.class
 com\anhembimorumbiprojetos\db\DbException.class
 com\anhembimorumbiprojetos\model\entities\Tarefa.class
 com\anhembimorumbiprojetos\controller\MainController.class
+com\anhembimorumbiprojetos\controller\TarefaControllerView$5.class
 com\anhembimorumbiprojetos\controller\TarefaControllerView$3.class
 com\anhembimorumbiprojetos\controller\EquipeControllerView.class
 com\anhembimorumbiprojetos\controller\MembroControllerView.class
@@ -27,6 +30,7 @@ com\anhembimorumbiprojetos\controller\ProjetoControllerView.class
 com\anhembimorumbiprojetos\controller\MembroController.class
 com\anhembimorumbiprojetos\controller\TarefaControllerView$2.class
 com\anhembimorumbiprojetos\controller\TarefaController.class
+com\anhembimorumbiprojetos\controller\TarefaControllerView$7.class
 com\anhembimorumbiprojetos\controller\TarefaControllerView.class
 com\anhembimorumbiprojetos\view\ProjetoViewController.class
 com\anhembimorumbiprojetos\controller\ProjetoControllerView$2.class

@@ -1,12 +1,9 @@
 package com.anhembimorumbiprojetos.controller;
 
-import java.time.LocalDate;
-
 import com.anhembimorumbiprojetos.MainApp;
 import com.anhembimorumbiprojetos.db.DB;
 import com.anhembimorumbiprojetos.model.dao.MembroDao;
 import com.anhembimorumbiprojetos.model.dao.ProjetoDao;
-import com.anhembimorumbiprojetos.model.dao.TarefaDao;
 import com.anhembimorumbiprojetos.model.entities.Membro;
 import com.anhembimorumbiprojetos.model.entities.Projeto;
 import com.anhembimorumbiprojetos.model.entities.Tarefa;
@@ -14,38 +11,41 @@ import com.anhembimorumbiprojetos.model.entities.Tarefa;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class TarefaControllerView {
 
     @FXML private TextField tituloField;
-    @FXML private TextField descricaoField;
+    @FXML private TextArea descricaoField;
     @FXML private DatePicker dataInicioField;
     @FXML private DatePicker dataTerminoField;
     @FXML private TextField statusField;
     @FXML private ComboBox<Projeto> projetoComboBox;
     @FXML private ComboBox<Membro> membroComboBox;
+    @FXML private ComboBox<Projeto> filtroProjetoComboBox;
+    @FXML private ComboBox<Membro> filtroMembroComboBox;
 
     @FXML private TableView<Tarefa> tabelaTarefas;
     @FXML private TableColumn<Tarefa, Integer> colId;
     @FXML private TableColumn<Tarefa, String> colTitulo;
     @FXML private TableColumn<Tarefa, String> colStatus;
-    @FXML private TableColumn<Tarefa, String> colProjeto;
-    @FXML private TableColumn<Tarefa, String> colResponsavel;
 
-    private TarefaDao tarefaDao;
+    private TarefaController tarefaController;
     private ProjetoDao projetoDao;
     private MembroDao membroDao;
     private ObservableList<Tarefa> tarefas;
+    private ObservableList<Projeto> projetos;
+    private ObservableList<Membro> membros;
+    private Tarefa tarefaSelecionada;
 
     public TarefaControllerView() {
-        this.tarefaDao = new TarefaDao(DB.getConnection());
+        this.tarefaController = new TarefaController();
         this.projetoDao = new ProjetoDao(DB.getConnection());
         this.membroDao = new MembroDao(DB.getConnection());
     }
@@ -55,18 +55,15 @@ public class TarefaControllerView {
         colId.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         colTitulo.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTitulo()));
         colStatus.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
-        colProjeto.setCellValueFactory(cellData -> {
-            Projeto projeto = projetoDao.buscarPorId(cellData.getValue().getProjetoId());
-            String nomeProjeto = (projeto != null) ? projeto.getNome() : "Sem projeto";
-            return new javafx.beans.property.SimpleStringProperty(nomeProjeto);
-        });
-        colResponsavel.setCellValueFactory(cellData -> {
-            Membro membro = membroDao.buscarPorId(cellData.getValue().getMembroId());
-            String nomeMembro = (membro != null) ? membro.getNome() : "Sem responsável";
-            return new javafx.beans.property.SimpleStringProperty(nomeMembro);
-        });
 
-        projetoComboBox.setItems(FXCollections.observableArrayList(projetoDao.listarTodos()));
+        projetos = FXCollections.observableArrayList(projetoDao.listarTodos());
+        membros = FXCollections.observableArrayList(membroDao.listarTodos());
+
+        projetoComboBox.setItems(projetos);
+        filtroProjetoComboBox.setItems(projetos);
+        membroComboBox.setItems(membros);
+        filtroMembroComboBox.setItems(membros);
+
         projetoComboBox.setCellFactory(cb -> new ListCell<>() {
             @Override
             protected void updateItem(Projeto item, boolean empty) {
@@ -82,7 +79,21 @@ public class TarefaControllerView {
             }
         });
 
-        membroComboBox.setItems(FXCollections.observableArrayList(membroDao.listarTodos()));
+        filtroProjetoComboBox.setCellFactory(cb -> new ListCell<>() {
+            @Override
+            protected void updateItem(Projeto item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.getNome());
+            }
+        });
+        filtroProjetoComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Projeto item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.getNome());
+            }
+        });
+
         membroComboBox.setCellFactory(cb -> new ListCell<>() {
             @Override
             protected void updateItem(Membro item, boolean empty) {
@@ -98,38 +109,103 @@ public class TarefaControllerView {
             }
         });
 
-        tarefas = FXCollections.observableArrayList(tarefaDao.listarTodos());
+        filtroMembroComboBox.setCellFactory(cb -> new ListCell<>() {
+            @Override
+            protected void updateItem(Membro item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.getNome());
+            }
+        });
+        filtroMembroComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Membro item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item.getNome());
+            }
+        });
+
+        tarefas = FXCollections.observableArrayList(tarefaController.listarTarefas());
         tabelaTarefas.setItems(tarefas);
+
+        tabelaTarefas.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            tarefaSelecionada = newVal;
+            if (newVal != null) {
+                tituloField.setText(newVal.getTitulo());
+                descricaoField.setText(newVal.getDescricao());
+                dataInicioField.setValue(newVal.getDataInicio());
+                dataTerminoField.setValue(newVal.getDataTermino());
+                statusField.setText(newVal.getStatus());
+                projetoComboBox.getSelectionModel().select(projetoDao.buscarPorId(newVal.getProjetoId()));
+                membroComboBox.getSelectionModel().select(membroDao.buscarPorId(newVal.getMembroId()));
+            } else {
+                limparCampos();
+            }
+        });
+    }
+    @FXML
+    public void onAdicionarTarefa() {
+        Tarefa tarefa = new Tarefa();
+        tarefa.setTitulo(tituloField.getText());
+        tarefa.setDescricao(descricaoField.getText());
+        tarefa.setDataInicio(dataInicioField.getValue());
+        tarefa.setDataTermino(dataTerminoField.getValue());
+        tarefa.setStatus(statusField.getText());
+        tarefa.setProjetoId(projetoComboBox.getValue() != null ? projetoComboBox.getValue().getId() : 0);
+        tarefa.setMembroId(membroComboBox.getValue() != null ? membroComboBox.getValue().getId() : 0);
+
+        tarefaController.adicionarTarefa(tarefa);
+        tarefas.setAll(tarefaController.listarTarefas());
+        limparCampos();
     }
 
     @FXML
-    public void onAdicionarTarefa() {
-        String titulo = tituloField.getText();
-        String descricao = descricaoField.getText();
-        LocalDate inicio = dataInicioField.getValue();
-        LocalDate termino = dataTerminoField.getValue();
-        String status = statusField.getText();
-        Projeto projeto = projetoComboBox.getValue();
-        Membro membro = membroComboBox.getValue();
+    public void onAtualizarTarefa() {
+        if (tarefaSelecionada == null) return;
 
-        if (titulo.isEmpty() || status.isEmpty() || projeto == null || membro == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Preencha os campos obrigatórios: Título, Status, Projeto e Responsável.");
-            alert.show();
-            return;
+        tarefaSelecionada.setTitulo(tituloField.getText());
+        tarefaSelecionada.setDescricao(descricaoField.getText());
+        tarefaSelecionada.setDataInicio(dataInicioField.getValue());
+        tarefaSelecionada.setDataTermino(dataTerminoField.getValue());
+        tarefaSelecionada.setStatus(statusField.getText());
+        tarefaSelecionada.setProjetoId(projetoComboBox.getValue() != null ? projetoComboBox.getValue().getId() : 0);
+        tarefaSelecionada.setMembroId(membroComboBox.getValue() != null ? membroComboBox.getValue().getId() : 0);
+
+        tarefaController.atualizarTarefa(tarefaSelecionada);
+        tarefas.setAll(tarefaController.listarTarefas());
+        limparCampos();
+    }
+
+    @FXML
+    public void onExcluirTarefa() {
+        if (tarefaSelecionada == null) return;
+
+        tarefaController.removerTarefa(tarefaSelecionada.getId());
+        tarefas.setAll(tarefaController.listarTarefas());
+        limparCampos();
+    }
+
+    @FXML
+    public void onFiltrarPorProjeto() {
+        Projeto projeto = filtroProjetoComboBox.getValue();
+        if (projeto != null) {
+            tarefas.setAll(tarefaController.listarTarefasPorProjeto(projeto.getId()));
         }
+    }
 
-        Tarefa tarefa = new Tarefa();
-        tarefa.setTitulo(titulo);
-        tarefa.setDescricao(descricao);
-        tarefa.setDataInicio(inicio);
-        tarefa.setDataTermino(termino);
-        tarefa.setStatus(status);
-        tarefa.setProjetoId(projeto.getId());
-        tarefa.setMembroId(membro.getId());
+    @FXML
+    public void onFiltrarPorMembro() {
+        Membro membro = filtroMembroComboBox.getValue();
+        if (membro != null) {
+            tarefas.setAll(tarefaController.listarTarefasPorMembro(membro.getId()));
+        }
+    }
 
-        tarefaDao.adicionarTarefa(tarefa);
-        tarefas.setAll(tarefaDao.listarTodos());
+    @FXML
+    public void onVoltarDashboard() {
+        MainApp.changeScene("/view/dashboard.fxml", "Dashboard");
+    }
 
+    private void limparCampos() {
         tituloField.clear();
         descricaoField.clear();
         dataInicioField.setValue(null);
@@ -137,11 +213,8 @@ public class TarefaControllerView {
         statusField.clear();
         projetoComboBox.getSelectionModel().clearSelection();
         membroComboBox.getSelectionModel().clearSelection();
+        tabelaTarefas.getSelectionModel().clearSelection();
+        tarefaSelecionada = null;
     }
-    @FXML
-    public void onVoltarDashboard() {
-        MainApp.changeScene("view/dashboard.fxml", "Dashboard");
-    }
-
 }
 

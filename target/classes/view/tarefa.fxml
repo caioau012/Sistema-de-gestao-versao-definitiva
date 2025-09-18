@@ -9,7 +9,7 @@
             prefWidth="800" prefHeight="600">
 
     <top>
-        <Label text="Cadastro de Tarefas"
+        <Label text="Gestão de Tarefas"
                style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10px;"/>
     </top>
 
@@ -20,7 +20,7 @@
                 <TextField fx:id="tituloField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                 <Label text="Descrição:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="descricaoField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <TextArea fx:id="descricaoField" prefRowCount="3" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                 <Label text="Data Início:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                 <DatePicker fx:id="dataInicioField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
@@ -34,24 +34,35 @@
                 <Label text="Projeto:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                 <ComboBox fx:id="projetoComboBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                <Label text="Responsável:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <Label text="Membro:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
                 <ComboBox fx:id="membroComboBox" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
             </GridPane>
 
-            <Button text="Adicionar Tarefa" onAction="#onAdicionarTarefa" style="-fx-padding: 10px;"/>
+            <HBox spacing="10">
+                <Button text="Adicionar" onAction="#onAdicionarTarefa"/>
+                <Button text="Atualizar" onAction="#onAtualizarTarefa"/>
+                <Button text="Excluir" onAction="#onExcluirTarefa"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Filtrar por Projeto:"/>
+                <ComboBox fx:id="filtroProjetoComboBox"/>
+                <Button text="Filtrar" onAction="#onFiltrarPorProjeto"/>
+
+                <Label text="Filtrar por Membro:"/>
+                <ComboBox fx:id="filtroMembroComboBox"/>
+                <Button text="Filtrar" onAction="#onFiltrarPorMembro"/>
+            </HBox>
 
             <TableView fx:id="tabelaTarefas" prefHeight="300">
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
-                    <TableColumn fx:id="colTitulo" text="Título" prefWidth="150"/>
+                    <TableColumn fx:id="colTitulo" text="Título" prefWidth="200"/>
                     <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
-                    <TableColumn fx:id="colProjeto" text="Projeto" prefWidth="150"/>
-                    <TableColumn fx:id="colResponsavel" text="Responsável" prefWidth="150"/>
                 </columns>
             </TableView>
+
             <Button text="Voltar ao Dashboard" onAction="#onVoltarDashboard" style="-fx-padding: 10px;"/>
-            
         </VBox>
     </center>
 </BorderPane>
-

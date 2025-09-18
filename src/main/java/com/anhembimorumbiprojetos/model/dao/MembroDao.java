@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,40 +40,39 @@ public class MembroDao {
         }
     }
 	
-	public void adicionarMembro (Membro membro) {
-		verificarConexao();
-		PreparedStatement st = null;
-		try {
-			st = conn.prepareStatement("INSERT INTO membro (nome, email, equipeId) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-			st.setString(1,  membro.getNome());
-			st.setString(2, membro.getEmail());
-			if (membro.getEquipeId() > 0) {
-				st.setInt(3,  membro.getEquipeId());
-			}
-			else {
-				st.setNull(3, java.sql.Types.INTEGER);
-			}
-			
-			int rowsAffected = st.executeUpdate();
-			
-			if (rowsAffected > 0) {
-				ResultSet rs = st.getGeneratedKeys();
-				if (rs.next()) {
-					int id = rs.getInt(1);
-					membro.setId(id);
-				}
-				DB.closeResultSet(rs);
-			}
-			else {
-				throw new DbException ("Erro inesperado! Nenhuma linha afetada!");
-			}
-		}
-		catch(SQLException e) {
-			throw new DbException (e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-		}
+	public void adicionarMembro(Membro membro) {
+	    verificarConexao();
+
+	    if (buscarPorEmail(membro.getEmail()) != null) {
+	        throw new DbException("Email já cadastrado: " + membro.getEmail());
+	    }
+
+	    PreparedStatement st = null;
+	    try {
+	        st = conn.prepareStatement(
+	            "INSERT INTO membro (nome, email, equipeId) VALUES (?, ?, ?)",
+	            Statement.RETURN_GENERATED_KEYS
+	        );
+	        st.setString(1, membro.getNome());
+	        st.setString(2, membro.getEmail());
+	        if (membro.getEquipeId() == 0) st.setNull(3, Types.INTEGER);
+	        else st.setInt(3, membro.getEquipeId());
+
+	        int rows = st.executeUpdate();
+	        if (rows > 0) {
+	            try (ResultSet rs = st.getGeneratedKeys()) {
+	                if (rs.next()) membro.setId(rs.getInt(1));
+	            }
+	        } else {
+	            throw new DbException("Inserção falhou: nenhuma linha afetada");
+	        }
+	    }
+	    catch (SQLException e) {
+	        throw new DbException(e.getMessage());
+	    }
+	    finally {
+	        DB.closeStatement(st);
+	    }
 	}
 	
 	public void atualizar(Membro membro) {
@@ -225,5 +225,22 @@ public class MembroDao {
 			membro.setEquipeId(equipeId);
 		}
 		return membro;
+	}
+	
+	public Membro buscarPorEmail(String email) {
+	    verificarConexao();
+	    String sql = "SELECT * FROM membro WHERE email = ?";
+	    try (PreparedStatement st = conn.prepareStatement(sql)) {
+	        st.setString(1, email);
+	        try (ResultSet rs = st.executeQuery()) {
+	            if (rs.next()) {
+	                return instanciarMembro(rs);
+	            }
+	            return null;
+	        }
+	    }
+	    catch (SQLException e) {
+	        throw new DbException(e.getMessage());
+	    }
 	}
 }

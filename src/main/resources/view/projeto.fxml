@@ -13,9 +13,9 @@
                style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10px;"/>
     </top>
 
+
     <center>
         <VBox spacing="15" style="-fx-padding: 20px;">
-            <!-- Formulário de entrada -->
             <GridPane hgap="10" vgap="10">
                 <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                 <TextField fx:id="nomeField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -36,9 +36,21 @@
                 <ComboBox fx:id="equipeComboBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
             </GridPane>
 
-            <Button text="Adicionar Projeto" onAction="#onAdicionarProjeto" style="-fx-padding: 10px;"/>
+            <HBox spacing="10">
+                <Button text="Adicionar" onAction="#onAdicionarProjeto"/>
+                <Button text="Atualizar" onAction="#onAtualizarProjeto"/>
+                <Button text="Excluir" onAction="#onExcluirProjeto"/>
+            </HBox>
 
-            <!-- Tabela de projetos -->
+	<HBox spacing="10">
+		<TextField fx:id="filtroField" promptText="Filtrar por nome" />
+		<Button text="Filtrar" onAction="#onFiltrarProjetos" />
+		<ComboBox fx:id="statusFiltroComboBox"
+			promptText="Filtrar por status" />
+		<Button text="Filtrar por Status"
+			onAction="#onFiltrarPorStatus" />
+	</HBox>
+
             <TableView fx:id="tabelaProjetos" prefHeight="300">
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
@@ -47,8 +59,8 @@
                     <TableColumn fx:id="colEquipe" text="Equipe" prefWidth="150"/>
                 </columns>
             </TableView>
+
             <Button text="Voltar ao Dashboard" onAction="#onVoltarDashboard" style="-fx-padding: 10px;"/>
-            
         </VBox>
     </center>
 </BorderPane>

@@ -6,35 +6,49 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.anhembimorumbiprojetos.controller.EquipeControllerView"
-            prefWidth="700" prefHeight="500">
+            prefWidth="800" prefHeight="600">
 
     <top>
-        <Label text="Cadastro de Equipes"
+        <Label text="Gestão de Equipes"
                style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10px;"/>
     </top>
 
     <center>
         <VBox spacing="15" style="-fx-padding: 20px;">
-            <GridPane hgap="10" vgap="10">
-                <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="nomeField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <HBox spacing="10">
+                <Label text="Nome da Equipe:"/>
+                <TextField fx:id="nomeEquipeField" prefWidth="200"/>
+                <Button text="Adicionar" onAction="#onAdicionarEquipe"/>
+                <Button text="Atualizar" onAction="#onAtualizarEquipe"/>
+                <Button text="Excluir" onAction="#onExcluirEquipe"/>
+            </HBox>
 
-                <Label text="Descrição:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="descricaoField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                <Label text="Data de Criação:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="dataCriacaoField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-            </GridPane>
-
-            <Button text="Adicionar Equipe" onAction="#onAdicionarEquipe" style="-fx-padding: 10px;"/>
-
-            <TableView fx:id="tabelaEquipes" prefHeight="300">
+            <TableView fx:id="tabelaEquipes" prefHeight="150">
                 <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
-                    <TableColumn fx:id="colNome" text="Nome" prefWidth="150"/>
-                    <TableColumn fx:id="colDescricao" text="Descrição" prefWidth="200"/>
+                    <TableColumn fx:id="colEquipeId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colEquipeNome" text="Nome" prefWidth="200"/>
                 </columns>
             </TableView>
+
+            <Separator/>
+
+            <HBox spacing="10">
+                <Label text="Nome do Membro:"/>
+                <TextField fx:id="nomeMembroField" prefWidth="150"/>
+                <Label text="Email:"/>
+                <TextField fx:id="emailMembroField" prefWidth="200"/>
+                <Button text="Adicionar Membro" onAction="#onAdicionarMembro"/>
+                <Button text="Remover Membro" onAction="#onRemoverMembro"/>
+            </HBox>
+
+            <TableView fx:id="tabelaMembros" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="colMembroId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colMembroNome" text="Nome" prefWidth="150"/>
+                    <TableColumn fx:id="colMembroEmail" text="Email" prefWidth="200"/>
+                </columns>
+            </TableView>
+
             <Button text="Voltar ao Dashboard" onAction="#onVoltarDashboard" style="-fx-padding: 10px;"/>
         </VBox>
     </center>

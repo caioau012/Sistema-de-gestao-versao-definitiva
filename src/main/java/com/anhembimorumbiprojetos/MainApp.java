@@ -1,5 +1,7 @@
 package com.anhembimorumbiprojetos;
 
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,10 +14,20 @@ public class MainApp extends Application {
     public static void setPrimaryStage(Stage stage) {
         primaryStage = stage;
     }
+    
+    public static Stage getPrimaryStage() {
+    	return primaryStage;
+    }
 
     public static void changeScene(String fxmlPath, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource(fxmlPath));
+            URL location = MainApp.class.getResource(fxmlPath);
+            if (location == null) {
+                System.err.println("FXML não encontrado: " + fxmlPath);
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(location);
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -26,7 +38,6 @@ public class MainApp extends Application {
             System.out.println("Erro ao trocar de cena para: " + fxmlPath);
         }
     }
-
     @Override
     public void start(Stage stage) {
         setPrimaryStage(stage);
@@ -35,6 +46,8 @@ public class MainApp extends Application {
 
 
     public static void main(String[] args) {
+        URL test = MainApp.class.getResource("/view/dashboard.fxml");
+        System.out.println("URL do FXML: " + test);
         launch(args);
     }
 }
